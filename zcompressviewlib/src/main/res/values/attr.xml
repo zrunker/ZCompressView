@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CompressView">
+        <attr name="defaultBg" format="reference" />
+        <attr name="compressBg" format="reference" />
+        <attr name="compressWidth" format="integer" />
+        <attr name="compressHeight" format="integer" />
+        <attr name="compressDis" format="integer" />
+        <attr name="compressDuration" format="integer" />
+        <attr name="compressText" format="string" />
+        <attr name="compressTextColor" format="integer" />
+        <attr name="compressTextSize" format="float" />
+        <attr name="compressTextBold" format="boolean" />
+        <attr name="compressTextGravity" format="integer">
+            <flag name="Gravity.CENTER" value="17" />
+            <flag name="Gravity.CENTER_VERTICAL" value="16" />
+            <flag name="Gravity.END" value="8388613" />
+            <flag name="Gravity.START" value="8388611" />
+            <flag name="Gravity.TOP" value="48" />
+            <flag name="Gravity.BOTTOM" value="80" />
+            <flag name="Gravity.CENTER_HORIZONTAL" value="1" />
+        </attr>
+    </declare-styleable>
+</resources>

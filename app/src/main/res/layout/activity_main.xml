@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+    <cc.ibooker.zcompressviewlib.CompressView
+        android:id="@+id/compressLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:compressBg="@drawable/bg_compress_57cac6_7"
+        app:compressDis="10"
+        app:compressDuration="100"
+        app:compressHeight="50"
+        app:compressText="点击A"
+        app:compressTextBold="true"
+        app:compressTextColor="@color/white"
+        app:compressTextGravity="Gravity.CENTER"
+        app:compressTextSize="18"
+        app:compressWidth="140"
+        app:defaultBg="@drawable/bg_compress_54adaa_7" />
+
+    <cc.ibooker.zcompressviewlib.CompressView
+        android:id="@+id/compressLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        app:compressBg="@drawable/bg_compress_b3aece_7"
+        app:compressDis="10"
+        app:compressDuration="100"
+        app:compressHeight="50"
+        app:compressText="点击B"
+        app:compressTextBold="true"
+        app:compressTextColor="@color/white"
+        app:compressTextGravity="Gravity.CENTER"
+        app:compressTextSize="18"
+        app:compressWidth="140"
+        app:defaultBg="@drawable/bg_compress_9893b7_7" />
+
+    <cc.ibooker.zcompressviewlib.CompressView
+        android:id="@+id/compressLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        app:compressBg="@drawable/bg_compress_cccccc_7"
+        app:compressDis="10"
+        app:compressDuration="100"
+        app:compressHeight="50"
+        app:compressText="点击C"
+        app:compressTextBold="true"
+        app:compressTextColor="@color/white"
+        app:compressTextGravity="Gravity.CENTER"
+        app:compressTextSize="18"
+        app:compressWidth="140"
+        app:defaultBg="@drawable/bg_compress_999999_7" />
+</LinearLayout>
