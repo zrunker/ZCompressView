@@ -22,18 +22,22 @@ public class CompressTV extends android.support.v7.widget.AppCompatTextView {
 
     CompressTV(Context context, int compressDis, int compressDuration) {
         this(context);
-        if (startTranslateAnimation == null) {
-            startTranslateAnimation = new TranslateAnimation(0, 0, 0, compressDis);
-            startTranslateAnimation.setDuration(compressDuration);
-            startTranslateAnimation.setFillAfter(true);
-            startTranslateAnimation.setInterpolator(new DecelerateInterpolator());
-        }
-        if (endTranslateAnimation == null) {
-            endTranslateAnimation = new TranslateAnimation(0, 0, compressDis, 0);
-            endTranslateAnimation.setDuration(compressDuration);
-            endTranslateAnimation.setFillAfter(true);
-            endTranslateAnimation.setInterpolator(new DecelerateInterpolator());
-        }
+        initTranslateAnimation(compressDis, compressDuration);
+    }
+
+    // 设置动画
+    public void initTranslateAnimation(int compressDis, int compressDuration) {
+        // 开始动画
+        startTranslateAnimation = new TranslateAnimation(0, 0, 0, compressDis);
+        startTranslateAnimation.setDuration(compressDuration);
+        startTranslateAnimation.setFillAfter(true);
+        startTranslateAnimation.setInterpolator(new DecelerateInterpolator());
+
+        // 结束动画
+        endTranslateAnimation = new TranslateAnimation(0, 0, compressDis, 0);
+        endTranslateAnimation.setDuration(compressDuration);
+        endTranslateAnimation.setFillAfter(true);
+        endTranslateAnimation.setInterpolator(new DecelerateInterpolator());
     }
 
     // 设置父控件不拦截CompressTextView事件

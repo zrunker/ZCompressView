@@ -11,10 +11,7 @@
         <attr name="compressText" format="string" />
         <attr name="compressTextColor" format="integer" />
         <attr name="compressTextSize" format="float" />
-        <attr name="compressTextBold" format="boolean">
-            <flag name="true" value="true" />
-            <flag name="false" value="false" />
-        </attr>
+        <attr name="compressTextBold" format="boolean" />
         <attr name="compressTextGravity" format="integer">
             <flag name="Gravity.CENTER" value="17" />
             <flag name="Gravity.CENTER_VERTICAL" value="16" />

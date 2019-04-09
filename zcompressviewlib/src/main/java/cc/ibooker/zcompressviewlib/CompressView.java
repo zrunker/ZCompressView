@@ -9,10 +9,12 @@ import android.support.annotation.Nullable;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 /**
@@ -33,6 +35,8 @@ public class CompressView extends FrameLayout {
     private float compressTextSize = 16;
     private boolean compressTextBold = false;
     private CompressTV textView;
+    private View view;
+    private LayoutParams layoutParams1, layoutParams2;
 
     public int getDefaultBg() {
         return defaultBg;
@@ -40,6 +44,8 @@ public class CompressView extends FrameLayout {
 
     public void setDefaultBg(int defaultBg) {
         this.defaultBg = defaultBg;
+        if (view != null)
+            view.setBackgroundResource(defaultBg);
     }
 
     public int getCompressBg() {
@@ -48,6 +54,8 @@ public class CompressView extends FrameLayout {
 
     public void setCompressBg(int compressBg) {
         this.compressBg = compressBg;
+        if (textView != null)
+            textView.setBackgroundResource(compressBg);
     }
 
     public int getCompressWidth() {
@@ -56,6 +64,14 @@ public class CompressView extends FrameLayout {
 
     public void setCompressWidth(int compressWidth) {
         this.compressWidth = compressWidth;
+        if (layoutParams1 != null) {
+            layoutParams1.width = compressWidth;
+            view.setLayoutParams(layoutParams1);
+        }
+        if (layoutParams2 != null) {
+            layoutParams2.width = compressWidth;
+            view.setLayoutParams(layoutParams2);
+        }
     }
 
     public int getCompressHeight() {
@@ -64,6 +80,14 @@ public class CompressView extends FrameLayout {
 
     public void setCompressHeight(int compressHeight) {
         this.compressHeight = compressHeight;
+        if (layoutParams1 != null) {
+            layoutParams1.height = compressHeight;
+            view.setLayoutParams(layoutParams1);
+        }
+        if (layoutParams2 != null) {
+            layoutParams2.height = compressHeight;
+            view.setLayoutParams(layoutParams2);
+        }
     }
 
     public int getCompressDis() {
@@ -72,6 +96,13 @@ public class CompressView extends FrameLayout {
 
     public void setCompressDis(int compressDis) {
         this.compressDis = compressDis;
+        if (layoutParams1 != null) {
+            layoutParams1.topMargin = compressDis;
+            view.setLayoutParams(layoutParams1);
+        }
+        if (textView != null) {
+            textView.initTranslateAnimation(compressDis, compressDuration);
+        }
     }
 
     public int getCompressDuration() {
@@ -80,6 +111,9 @@ public class CompressView extends FrameLayout {
 
     public void setCompressDuration(int compressDuration) {
         this.compressDuration = compressDuration;
+        if (textView != null) {
+            textView.initTranslateAnimation(compressDis, compressDuration);
+        }
     }
 
     public int getCompressTextColor() {
@@ -129,9 +163,16 @@ public class CompressView extends FrameLayout {
             TypedArray typeArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.CompressView, 0, 0);
             defaultBg = typeArray.getResourceId(R.styleable.CompressView_defaultBg, R.drawable.bg_compress_54adaa_7);
             compressBg = typeArray.getResourceId(R.styleable.CompressView_compressBg, R.drawable.bg_compress_57cac6_7);
-            compressWidth = typeArray.getInt(R.styleable.CompressView_compressWidth, 70) * 2;
-            compressHeight = typeArray.getInt(R.styleable.CompressView_compressHeight, 27) * 2;
-            compressDis = typeArray.getInt(R.styleable.CompressView_compressDis, 10) * 2;
+
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            WindowManager windowManager = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE));
+            if (windowManager != null)
+                windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+            int density = displayMetrics.density <= 0 ? 2 : (int) displayMetrics.density;
+            compressWidth = typeArray.getInt(R.styleable.CompressView_compressWidth, 70) * density;
+            compressHeight = typeArray.getInt(R.styleable.CompressView_compressHeight, 27) * density;
+            compressDis = typeArray.getInt(R.styleable.CompressView_compressDis, 10) * density;
+
             compressDuration = typeArray.getInt(R.styleable.CompressView_compressDuration, 100);
             compressText = typeArray.getString(R.styleable.CompressView_compressText);
             compressTextColor = typeArray.getInt(R.styleable.CompressView_compressTextColor, Color.WHITE);
@@ -141,14 +182,14 @@ public class CompressView extends FrameLayout {
             typeArray.recycle();
         }
 
-        LayoutParams layoutParams1 = new LayoutParams(compressWidth, compressHeight, Gravity.BOTTOM);
+        layoutParams1 = new LayoutParams(compressWidth, compressHeight, Gravity.BOTTOM);
         layoutParams1.topMargin = compressDis;
-        View view = new View(context);
+        view = new View(context);
         view.setBackgroundResource(defaultBg);
         view.setLayoutParams(layoutParams1);
         addView(view);
 
-        LayoutParams layoutParams2 = new LayoutParams(compressWidth, compressHeight, Gravity.TOP);
+        layoutParams2 = new LayoutParams(compressWidth, compressHeight, Gravity.TOP);
         textView = new CompressTV(context, compressDis, compressDuration);
         textView.setBackgroundResource(compressBg);
         textView.setLayoutParams(layoutParams2);
