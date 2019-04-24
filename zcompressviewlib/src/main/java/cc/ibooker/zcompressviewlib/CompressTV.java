@@ -58,12 +58,12 @@ public class CompressTV extends android.support.v7.widget.AppCompatTextView {
                 break;
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
-                if (endTranslateAnimation != null)
-                    startAnimation(endTranslateAnimation);
                 if (onCompressClickListener != null)
                     onCompressClickListener.onCompressClick(this);
                 else if (onClickListener != null)
                     onClickListener.onClick(this);
+                if (endTranslateAnimation != null)
+                    startAnimation(endTranslateAnimation);
                 break;
         }
         // 拦截点击事件
