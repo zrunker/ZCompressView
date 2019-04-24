@@ -9,12 +9,10 @@ import android.support.annotation.Nullable;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 /**
@@ -163,15 +161,18 @@ public class CompressView extends FrameLayout {
             TypedArray typeArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.CompressView, 0, 0);
             defaultBg = typeArray.getResourceId(R.styleable.CompressView_defaultBg, R.drawable.bg_compress_54adaa_7);
             compressBg = typeArray.getResourceId(R.styleable.CompressView_compressBg, R.drawable.bg_compress_57cac6_7);
-
-            DisplayMetrics displayMetrics = new DisplayMetrics();
-            WindowManager windowManager = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE));
-            if (windowManager != null)
-                windowManager.getDefaultDisplay().getMetrics(displayMetrics);
-            int density = displayMetrics.density <= 0 ? 2 : (int) displayMetrics.density;
-            compressWidth = typeArray.getInt(R.styleable.CompressView_compressWidth, 70) * density;
-            compressHeight = typeArray.getInt(R.styleable.CompressView_compressHeight, 27) * density;
-            compressDis = typeArray.getInt(R.styleable.CompressView_compressDis, 10) * density;
+            int width = typeArray.getInt(R.styleable.CompressView_compressWidth, 70);
+            int compressWidth1 = width * 2;
+            int compressWidth2 = dp2px(context, width);
+            compressWidth = compressWidth1 > compressWidth2 ? compressWidth1 : compressWidth2;
+            int height = typeArray.getInt(R.styleable.CompressView_compressHeight, 27);
+            int compressHeight1 = height * 2;
+            int compressHeight2 = dp2px(context, height);
+            compressHeight = compressHeight1 > compressHeight2 ? compressHeight1 : compressHeight2;
+            int dis = typeArray.getInt(R.styleable.CompressView_compressDis, 10);
+            int compressDis1 = dis * 2;
+            int compressDis2 = dp2px(context, dis);
+            compressDis = compressDis1 > compressDis2 ? compressDis1 : compressDis2;
 
             compressDuration = typeArray.getInt(R.styleable.CompressView_compressDuration, 100);
             compressText = typeArray.getString(R.styleable.CompressView_compressText);
@@ -260,5 +261,13 @@ public class CompressView extends FrameLayout {
     public void setOnCompressClickListener(CompressTV.OnCompressClickListener onCompressClickListener) {
         if (textView != null)
             textView.setOnCompressClickListener(onCompressClickListener);
+    }
+
+    /**
+     * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
+     */
+    public static int dp2px(Context context, float dpValue) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
     }
 }
