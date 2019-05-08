@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
 
@@ -13,14 +14,14 @@ import android.view.animation.TranslateAnimation;
  *
  * @author 邹峰立
  */
-public class CompressTV extends android.support.v7.widget.AppCompatTextView {
+public class ZCompressTV extends android.support.v7.widget.AppCompatTextView {
     private TranslateAnimation startTranslateAnimation, endTranslateAnimation;
 
-    public CompressTV(Context context) {
+    public ZCompressTV(Context context) {
         super(context);
     }
 
-    CompressTV(Context context, int compressDis, int compressDuration) {
+    ZCompressTV(Context context, int compressDis, int compressDuration) {
         this(context);
         initTranslateAnimation(compressDis, compressDuration);
     }
@@ -38,6 +39,22 @@ public class CompressTV extends android.support.v7.widget.AppCompatTextView {
         endTranslateAnimation.setDuration(compressDuration);
         endTranslateAnimation.setFillAfter(true);
         endTranslateAnimation.setInterpolator(new DecelerateInterpolator());
+        endTranslateAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                executeClick();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
     }
 
     // 设置父控件不拦截CompressTextView事件
@@ -58,16 +75,22 @@ public class CompressTV extends android.support.v7.widget.AppCompatTextView {
                 break;
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
-                if (onCompressClickListener != null)
-                    onCompressClickListener.onCompressClick(this);
-                else if (onClickListener != null)
-                    onClickListener.onClick(this);
                 if (endTranslateAnimation != null)
                     startAnimation(endTranslateAnimation);
+                else
+                    executeClick();
                 break;
         }
         // 拦截点击事件
         return true;
+    }
+
+    // 执行点击事件
+    private void executeClick() {
+        if (onCompressClickListener != null)
+            onCompressClickListener.onCompressClick(this);
+        else if (onClickListener != null)
+            onClickListener.onClick(this);
     }
 
     @Override
