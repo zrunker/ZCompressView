@@ -14,14 +14,14 @@ import android.view.animation.TranslateAnimation;
  *
  * @author 邹峰立
  */
-public class ZCompressTV extends android.support.v7.widget.AppCompatTextView {
+public class CompressTV extends android.support.v7.widget.AppCompatTextView {
     private TranslateAnimation startTranslateAnimation, endTranslateAnimation;
 
-    public ZCompressTV(Context context) {
+    public CompressTV(Context context) {
         super(context);
     }
 
-    ZCompressTV(Context context, int compressDis, int compressDuration) {
+    CompressTV(Context context, int compressDis, int compressDuration) {
         this(context);
         initTranslateAnimation(compressDis, compressDuration);
     }
