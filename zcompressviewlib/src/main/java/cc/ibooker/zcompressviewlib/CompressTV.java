@@ -3,6 +3,7 @@ package cc.ibooker.zcompressviewlib;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -16,6 +17,9 @@ import android.view.animation.TranslateAnimation;
  */
 public class CompressTV extends android.support.v7.widget.AppCompatTextView {
     private TranslateAnimation startTranslateAnimation, endTranslateAnimation;
+    private boolean enabled = true;
+    private boolean lock = false;// 锁动画
+    private boolean isCanExecute = true;// 点击事件是否可执行
 
     public CompressTV(Context context) {
         super(context);
@@ -23,7 +27,14 @@ public class CompressTV extends android.support.v7.widget.AppCompatTextView {
 
     CompressTV(Context context, int compressDis, int compressDuration) {
         this(context);
+        this.setGravity(Gravity.CENTER);
         initTranslateAnimation(compressDis, compressDuration);
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        this.enabled = enabled;
     }
 
     // 设置动画
@@ -42,12 +53,19 @@ public class CompressTV extends android.support.v7.widget.AppCompatTextView {
         endTranslateAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
+                if (!lock) {
+                    lock = true;
+                    isCanExecute = true;
+                } else
+                    isCanExecute = false;
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                executeClick();
+                // 动画结束-执行点击
+                if (isCanExecute)
+                    executeClick();
+                lock = false;
             }
 
             @Override
@@ -67,6 +85,7 @@ public class CompressTV extends android.support.v7.widget.AppCompatTextView {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (!enabled) return true;
         int action = event.getAction();
         switch (action) {
             case MotionEvent.ACTION_DOWN:
@@ -87,6 +106,7 @@ public class CompressTV extends android.support.v7.widget.AppCompatTextView {
 
     // 执行点击事件
     private void executeClick() {
+        if (ClickUtil.isFastClick()) return;
         if (onCompressClickListener != null)
             onCompressClickListener.onCompressClick(this);
         else if (onClickListener != null)

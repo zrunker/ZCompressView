@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextPaint;
@@ -32,9 +33,12 @@ public class CompressView extends FrameLayout {
     private CharSequence compressText = "";
     private float compressTextSize = 16;
     private boolean compressTextBold = false;
+    private boolean compressIsEnabled = true;
     private CompressTV textView;
     private View view;
     private LayoutParams layoutParams1, layoutParams2;
+    private int compressBackGroud;
+    private int compressDrawableLeft, compressDrawableRight, compressDrawableTop, compressDrawableBottom;
 
     public int getDefaultBg() {
         return defaultBg;
@@ -180,6 +184,12 @@ public class CompressView extends FrameLayout {
             compressTextSize = typeArray.getFloat(R.styleable.CompressView_compressTextSize, 16);
             compressTextBold = typeArray.getBoolean(R.styleable.CompressView_compressTextBold, false);
             compressTextGravity = typeArray.getInt(R.styleable.CompressView_compressTextGravity, Gravity.CENTER);
+            compressIsEnabled = typeArray.getBoolean(R.styleable.CompressView_compressIsEnabled, true);
+            compressBackGroud = typeArray.getResourceId(R.styleable.CompressView_compressBackGroud, 0);
+            compressDrawableLeft = typeArray.getResourceId(R.styleable.CompressView_compressDrawableLeft, 0);
+            compressDrawableRight = typeArray.getResourceId(R.styleable.CompressView_compressDrawableRight, 0);
+            compressDrawableTop = typeArray.getResourceId(R.styleable.CompressView_compressDrawableTop, 0);
+            compressDrawableBottom = typeArray.getResourceId(R.styleable.CompressView_compressDrawableBottom, 0);
             typeArray.recycle();
         }
 
@@ -201,43 +211,108 @@ public class CompressView extends FrameLayout {
         setCompressTextSize(compressTextSize);
         setCompressTextBold(compressTextBold);
         setCompressTextGravity(compressTextGravity);
+        setCompressIsEnabled(compressIsEnabled);
+        if (compressBackGroud != 0)
+            setCompressBackGroud(compressBackGroud);
+        if (compressDrawableLeft != 0
+                || compressDrawableRight != 0
+                || compressDrawableTop != 0
+                || compressDrawableBottom != 0)
+            setCompressCompoundDrawables(compressDrawableLeft, compressDrawableTop, compressDrawableRight, compressDrawableBottom);
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        this.compressIsEnabled = enabled;
+        setCompressIsEnabled(compressIsEnabled);
+    }
+
+    // 设置Drawable
+    public CompressView setCompressCompoundDrawables(Drawable left, Drawable top, Drawable right, Drawable bottom) {
+        textView.setCompoundDrawablesWithIntrinsicBounds(left, top, right, bottom);
+        return this;
+    }
+
+    public CompressView setCompressCompoundDrawables(int left, int top, int right, int bottom) {
+        this.compressDrawableLeft = left;
+        this.compressDrawableRight = right;
+        this.compressDrawableTop = top;
+        this.compressDrawableBottom = bottom;
+        textView.setCompoundDrawablesWithIntrinsicBounds(left, top, right, bottom);
+        return this;
+    }
+
+    // 设置背景
+    public CompressView setCompressBackGroud(int backGroudReg) {
+        compressBackGroud = backGroudReg;
+        textView.setBackgroundColor(backGroudReg);
+        return this;
+    }
+
+    public CompressView setCompressBackGroud(String backGroudColor) {
+        if (!TextUtils.isEmpty(backGroudColor))
+            try {
+                int color = Color.parseColor(backGroudColor);
+                textView.setBackgroundColor(color);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        return this;
+    }
+
+    public CompressView setCompressBackGroud(Drawable backGroudDraw) {
+        if (backGroudDraw != null)
+            textView.setBackgroundDrawable(backGroudDraw);
+        return this;
+    }
+
+    // 设置按钮是否可以点击事件
+    public CompressView setCompressIsEnabled(boolean compressIsEnabled) {
+        this.compressIsEnabled = compressIsEnabled;
+        textView.setEnabled(compressIsEnabled);
+        return this;
     }
 
     // 设置按钮显示文本
-    public void setCompressText(CharSequence compressText) {
+    public CompressView setCompressText(CharSequence compressText) {
         if (!TextUtils.isEmpty(compressText) && textView != null) {
             this.compressText = compressText;
             textView.setText(compressText);
         }
+        return this;
     }
 
     // 设置按钮显示文本颜色
-    public void setCompressTextColor(int color) {
+    public CompressView setCompressTextColor(int color) {
         if (color != 0 && textView != null) {
             this.compressTextColor = color;
             textView.setTextColor(color);
         }
+        return this;
     }
 
     // 设置按钮显示文本大小
-    public void setCompressTextSize(float size) {
+    public CompressView setCompressTextSize(float size) {
         if (size > 0 && textView != null) {
             this.compressTextSize = size;
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
         }
+        return this;
     }
 
     // 设置字体是否加粗
-    public void setCompressTextBold(boolean b) {
+    public CompressView setCompressTextBold(boolean b) {
         if (textView != null) {
             this.compressTextBold = b;
             TextPaint paint = textView.getPaint();
             paint.setFakeBoldText(b);
         }
+        return this;
     }
 
     // 设置字体显示位置
-    public void setCompressTextGravity(int gravity) {
+    public CompressView setCompressTextGravity(int gravity) {
         if (textView != null) {
             if (gravity == Gravity.CENTER
                     || gravity == Gravity.CENTER_VERTICAL
@@ -250,6 +325,7 @@ public class CompressView extends FrameLayout {
                 textView.setGravity(gravity);
             }
         }
+        return this;
     }
 
     @Override

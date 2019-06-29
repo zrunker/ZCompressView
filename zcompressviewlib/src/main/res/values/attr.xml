@@ -21,5 +21,11 @@
             <flag name="Gravity.BOTTOM" value="80" />
             <flag name="Gravity.CENTER_HORIZONTAL" value="1" />
         </attr>
+        <attr name="compressIsEnabled" format="boolean" />
+        <attr name="compressBackGroud" format="reference" />
+        <attr name="compressDrawableLeft" format="reference" />
+        <attr name="compressDrawableRight" format="reference" />
+        <attr name="compressDrawableTop" format="reference" />
+        <attr name="compressDrawableBottom" format="reference" />
     </declare-styleable>
 </resources>
