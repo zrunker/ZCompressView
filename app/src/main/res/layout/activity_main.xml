@@ -8,7 +8,6 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-
     <cc.ibooker.zcompressviewlib.CompressView
         android:id="@+id/compressLayout"
         android:layout_width="wrap_content"
@@ -39,7 +38,7 @@
         app:compressTextColor="@color/white"
         app:compressTextGravity="Gravity.CENTER"
         app:compressTextSize="18"
-        app:compressWidth="140"
+        app:compressWidth="100"
         app:defaultBg="@drawable/bg_compress_9893b7_7" />
 
     <cc.ibooker.zcompressviewlib.CompressView

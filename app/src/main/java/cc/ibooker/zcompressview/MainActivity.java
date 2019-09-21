@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         CompressView compressView = findViewById(R.id.compressLayout);
+        compressView.setCompressIsEnabled(true);
+        compressView.setCompressCompoundDrawables(R.drawable.ic_launcher_background, 0, 0, 0);
         compressView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -30,5 +32,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "第二个按钮", Toast.LENGTH_SHORT).show();
             }
         });
+        compressView1.setCompressWidth(140);
     }
 }

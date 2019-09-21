@@ -64,15 +64,17 @@ public class CompressView extends FrameLayout {
         return compressWidth;
     }
 
-    public void setCompressWidth(int compressWidth) {
-        this.compressWidth = compressWidth;
+    public void setCompressWidth(int width) {
+        int compressWidth1 = width * 2;
+        int compressWidth2 = dp2px(getContext(), width);
+        compressWidth = compressWidth1 > compressWidth2 ? compressWidth1 : compressWidth2;
         if (layoutParams1 != null) {
             layoutParams1.width = compressWidth;
             view.setLayoutParams(layoutParams1);
         }
         if (layoutParams2 != null) {
             layoutParams2.width = compressWidth;
-            view.setLayoutParams(layoutParams2);
+            textView.setLayoutParams(layoutParams2);
         }
     }
 
@@ -80,15 +82,17 @@ public class CompressView extends FrameLayout {
         return compressHeight;
     }
 
-    public void setCompressHeight(int compressHeight) {
-        this.compressHeight = compressHeight;
+    public void setCompressHeight(int height) {
+        int compressHeight1 = height * 2;
+        int compressHeight2 = dp2px(getContext(), height);
+        compressHeight = compressHeight1 > compressHeight2 ? compressHeight1 : compressHeight2;
         if (layoutParams1 != null) {
             layoutParams1.height = compressHeight;
             view.setLayoutParams(layoutParams1);
         }
         if (layoutParams2 != null) {
             layoutParams2.height = compressHeight;
-            view.setLayoutParams(layoutParams2);
+            textView.setLayoutParams(layoutParams2);
         }
     }
 
@@ -96,8 +100,10 @@ public class CompressView extends FrameLayout {
         return compressDis;
     }
 
-    public void setCompressDis(int compressDis) {
-        this.compressDis = compressDis;
+    public void setCompressDis(int dis) {
+        int compressDis1 = dis * 2;
+        int compressDis2 = dp2px(getContext(), dis);
+        compressDis = compressDis1 > compressDis2 ? compressDis1 : compressDis2;
         if (layoutParams1 != null) {
             layoutParams1.topMargin = compressDis;
             view.setLayoutParams(layoutParams1);
